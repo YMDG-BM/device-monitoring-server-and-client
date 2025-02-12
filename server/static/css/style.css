@@ -1,0 +1,100 @@
+body {
+    z-index: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('../img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    margin: 5px 0;
+}
+.CPU, .Memory, .Disk, .GPU {
+    margin: 10px 0;
+}
+
+.progress-container {
+    z-index: 1;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f5f5f5;
+    opacity: 0.6;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    backdrop-filter: blur(10px);
+    transition: all 1s ease-out;
+}
+
+.progress-item {
+    z-index: 2;
+    margin: 15px 0;
+    transition: all 1s ease-out;
+}
+
+.progress-title {
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+    transition: all 1s ease-out;
+}
+
+.progress-bar {
+    z-index: 2;
+    height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    transition: all 1s ease-out;
+}
+
+.progress-fill {
+    z-index: 2;
+    height: 100%;
+    width: 0;
+    transition: all 1s ease-out;
+    border-radius: 10px;
+}
+
+/* 不同进度条颜色 */
+.cpu .progress-fill { background: #2196F3; }
+.disk .progress-fill { background: #4CAF50; }
+.gpu-load .progress-fill { background: #9C27B0; }
+.gpu-mem .progress-fill { background: #FF9800; }
+.memory .progress-fill { background: #FF5722; }
+
+.grid-container {
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+.blur{
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    width: auto;
+    height: auto;
+    transition: all 1s ease-in-out;
+}
+.footer {
+    margin-top: auto; /* 推动内容到页面底部 */
+    text-align: center; /* 水平居中文字 */
+   
+  }
