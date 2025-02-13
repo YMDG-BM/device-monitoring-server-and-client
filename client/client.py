@@ -26,6 +26,7 @@ class MonitoringClient:
         
     def get_performance_data(self):
         return utils.get_performance()
+    
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -34,13 +35,19 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--target", help="The target to monitor. Example: monitor", type=str, default="monitor")
     url = parser.parse_args().server_url+"/"+parser.parse_args().target
     retry_duration = parser.parse_args().retry_duration
-    client = MonitoringClient(url)
+    
     while True:
-        # retry_duration = 3  # 重试间隔时间
-        performance_data = client.get_performance_data()
-        response = client.send_data(performance_data)
-        if response:
-            print("Response from server:", response)
-        else:
-            print(f"Failed to send data, will retry in {retry_duration} seconds.")
+        try:
+            client = MonitoringClient(url)
+            # retry_duration = 3  # 重试间隔时间
+            performance_data = client.get_performance_data()
+            response = client.send_data(performance_data)
+            if response:
+                print("Response from server:", response)
+            else:
+                print(f"Failed to send data, will retry in {retry_duration} seconds.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            print(f"Retrying in {retry_duration} seconds.")
+        del client
         time.sleep(retry_duration)  # 每隔retry_duration秒重试一次

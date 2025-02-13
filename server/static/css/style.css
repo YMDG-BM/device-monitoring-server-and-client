@@ -1,6 +1,6 @@
 body {
     z-index: 0;
-    font-family: Arial, sans-serif;
+    font-family: Lexend, Arial, sans-serif;
     background-image: url('../img/background.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -16,15 +16,51 @@ li {
     margin: 10px 0;
 }
 
-.progress-container {
+#pc-info{
+    margin:10px;
+}
+
+.active-window-container {
+    position: absolute;
+    background: #f5f5f5;
+    top: 57%;
+    right: 2%;
+    width: 20%;
+    margin: 10px;
+    padding: 10px;
+    opacity: 0.6;
+    border-radius: 10px;
+    font-family: Lexend, Arial, sans-serif;
+    backdrop-filter: blur(10px);
+    transition: all 1s ease-out;
+}
+
+
+.pc-container {
     z-index: 1;
-    max-width: 800px;
-    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: left;
+    margin: 20px;
     padding: 20px;
     background: #f5f5f5;
     opacity: 0.6;
     border-radius: 10px;
-    font-family: Arial, sans-serif;
+    font-family: Lexend, Arial, sans-serif;
+    backdrop-filter: blur(10px);
+    transition: all 1s ease-out;
+}
+
+.progress-container {
+    z-index: 1;
+    position: relative;
+    width: 70%;
+    margin: 10px;
+    padding: 10px;
+    background: #f5f5f5;
+    opacity: 0.6;
+    border-radius: 10px;
+    font-family: Lexend, Arial, sans-serif;
     backdrop-filter: blur(10px);
     transition: all 1s ease-out;
 }
@@ -77,10 +113,37 @@ li {
     gap: 20px;
 }
 
-@media (min-width: 768px) {
-    .grid-container {
-        grid-template-columns: repeat(4, 1fr);
+@media (max-width: 820px) {
+    .pc-container{
+        grid-template-columns: repeat(1, 1fr);
     }
+    .progress-container {
+        z-index: 1;
+        position:relative;
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f5f5f5;
+        opacity: 0.6;
+        border-radius: 10px;
+        font-family: Lexend, Arial, sans-serif;
+        backdrop-filter: blur(10px);
+        transition: all 1s ease-out;
+    }
+    .active-window-container {
+        display: flex;
+        position: relative;
+        background: #f5f5f5;
+        width: auto;
+        align-items: center;
+        padding: 10px;
+        opacity: 0.6;
+        border-radius: 10px;
+        font-family: Lexend, Arial, sans-serif;
+        backdrop-filter: blur(10px);
+        transition: all 1s ease-out;
+    }
+
 }
 .blur{
     backdrop-filter: blur(10px);
@@ -88,7 +151,7 @@ li {
     border-radius: 10px;
     padding: 20px;
     margin: 20px auto;
-    max-width: 800px;
+    max-width: 900px;
     width: auto;
     height: auto;
     transition: all 1s ease-in-out;
@@ -98,3 +161,6 @@ li {
     text-align: center; /* 水平居中文字 */
    
   }
+.active_window{
+    margin-bottom: 20px;
+}
