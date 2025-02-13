@@ -3,15 +3,21 @@ import json
 import time
 import argparse
 import utils
+import getmac
 
 class MonitoringClient:
     def __init__(self, server_url):
         self.server_url = server_url
+        self.device_key = getmac.get_mac_address()
 
     def send_data(self, data):
         headers = {'Content-Type': 'application/json'}
+        payload = {
+            "device_key": self.device_key,
+            "performance_data": data
+        }
         try:
-            response = requests.post(self.server_url, data=json.dumps(data), headers=headers)
+            response = requests.post(self.server_url, data=json.dumps(payload), headers=headers)
             response.raise_for_status()  # 如果响应状态码不是200，抛出HTTPError
             return response.json()
         except requests.exceptions.RequestException as e:

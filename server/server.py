@@ -9,6 +9,9 @@ client_data = {}
 client_last_seen = time.time()
 client_timeout = 30  # 超时时间，单位为秒
 
+with open("./device_key.txt", "r") as f:
+    device_key = f.read().strip()
+
 def monitor_client_status():
     global client_last_seen
     while True:
@@ -26,7 +29,10 @@ def get_status():
 @app.route('/monitor', methods=['POST'])
 def monitor():
     global client_data, client_last_seen
-    client_data = request.json
+    data = request.json
+    if data.get("device_key") != device_key:
+        return jsonify({"error": "Unauthorized"}), 401
+    client_data = data.get("performance_data")
     client_last_seen = time.time()
     return jsonify({"status": "success"})
 

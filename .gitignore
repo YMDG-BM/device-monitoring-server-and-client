@@ -1,0 +1,5 @@
+device_key.txt
+server/img/background.jpg
+utils/__pycache__/
+server/__pycache__/
+client/utils/__pycache__/__init__.cpython-310.pyc
