@@ -20,7 +20,7 @@ function renderActiveWindowMessage(){
             container.innerHTML = '<div class="Offline" style="font-size: 14px;"></div>';
         }
         else {
-            container.innerHTML = `<div class="active_window"><h3>当前激活窗口</h3>${data.active_window.title}</div>`;
+            container.innerHTML = `<div class="active_window"><h3>当前激活窗口</h3><p class="window-title">${data.active_window.title}</p></div>`;
         }
 });
 }

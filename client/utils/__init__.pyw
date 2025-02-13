@@ -1,9 +1,8 @@
 import psutil
 import GPUtil
-import subprocess
+import time
 import platform
-
-
+import cpuinfo
 def get_active_window():
     import pygetwindow as gw
     try:
@@ -11,7 +10,7 @@ def get_active_window():
         if window is not None:
             return {
                 'title': window.title,
-                'hwnd': window._hWnd
+                #'hwnd': window._hWnd
             }
         else:
             return None
@@ -20,25 +19,22 @@ def get_active_window():
         return None
     
 
-
+"""
 def get_cpu_name():
     try:
-        os_name = platform.system()
-        if os_name == 'Windows':
-            # Windows系统使用wmic命令
-            command = 'wmic cpu get name'
-            cpu_name = subprocess.check_output(command, shell=True).decode('utf-8').split('\n')[1].strip()
-        elif os_name == 'Linux':
-            # Linux系统读取/proc/cpuinfo文件
-            command = 'grep "model name" /proc/cpuinfo | head -n 1 | cut -d ":" -f 2'
-            cpu_name = subprocess.check_output(command, shell=True).decode('utf-8').strip()
-        else:
-            raise NotImplementedError(f"Unsupported OS: {os_name}")
+        print("get_cpu_name function running...")
+        time.sleep(5)
+        info = cpuinfo.get_cpu_info()
+        cpu_name = info['brand_raw']
+        print("get_cpu_name function running...")
+        time.sleep(5)
         return cpu_name
     except Exception as e:
         print("无法获取CPU名称:", e)
+        print("get_cpu_name function running...")
+        time.sleep(5)
         return None
-
+"""
     
 def get_performance():
     cpu_usage = psutil.cpu_percent(interval=1)
@@ -59,7 +55,7 @@ def get_performance():
 
     performance_data = {
         "cpu": {
-            "name": get_cpu_name(),
+            #"name": get_cpu_name(),
             "usage": round(cpu_usage, 1)
         },
         "memory": {
