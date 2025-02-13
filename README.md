@@ -16,15 +16,15 @@ monitoring-service
 │   │       └── script.js				# JavaScript 文件
 │   ├── templates
 │   │   └── display.html				# HTML 模板文件
-│   ├── server.py				# 服务端入口点，设置HTTP服务器并处理请求
+│   ├── server.py					# 服务端入口点，设置HTTP服务器并处理请求
 │   └── requirements.txt				# 项目依赖项
 ├── client
 │   ├── utils
-│   │   └── __init__.py				# 工具函数
-│   └──client.py				# 客户端入口点，发送请求并处理响应
-├── dockerfile				# Docker 配置文件
-├── README.md				# 项目文档
-└── requirements.txt				# 项目依赖项
+│   │   └── __init__.py					# 工具函数
+│   └──client.py					# 客户端入口点，发送请求并处理响应
+├── dockerfile						# Docker 配置文件
+├── README.md						# 项目文档
+└── requirements.txt					# 项目依赖项
 ```
 
 ## 环境设置
