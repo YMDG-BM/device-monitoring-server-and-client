@@ -1,35 +1,8 @@
 import requests
 import json
 import time
-import psutil
-import GPUtil
-import subprocess
-import pygetwindow as gw
-
-def get_active_window():
-    try:
-        window = gw.getActiveWindow()
-        if window is not None:
-            return {
-                'title': window.title,
-                'hwnd': window._hWnd
-            }
-        else:
-            return None
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return None
-
-def get_cpu_name():
-    try:
-        # 执行wmic命令获取CPU名称
-        command = 'wmic cpu get name'
-        cpu_name = subprocess.check_output(command, shell=True).decode('utf-8').split('\n')[1].strip()
-        return cpu_name
-    except Exception as e:
-        print("无法获取CPU名称:", e)
-        return None
-
+import argparse
+import utils
 
 class MonitoringClient:
     def __init__(self, server_url):
@@ -44,46 +17,20 @@ class MonitoringClient:
         except requests.exceptions.RequestException as e:
             print(f"Error sending data: {e}")
             return None
-
-    def get_cpu_model(self):
-        return get_cpu_name()
-
+        
     def get_performance_data(self):
-        cpu_usage = psutil.cpu_percent(interval=1)
-        memory_info = psutil.virtual_memory()
-        disk_info = psutil.disk_usage('/')
-        gpus = GPUtil.getGPUs()
-        gpu_info = [{"name": gpu.name, "load": gpu.load * 100, "memory_total": gpu.memoryTotal, "memory_used": gpu.memoryUsed, "memory_percent": gpu.memoryUtil * 100} for gpu in gpus]
-
-        performance_data = {
-            "cpu": {
-                "name": self.get_cpu_model(),
-                "usage": round(cpu_usage, 1)
-            },
-            "memory": {
-                "percent": memory_info.percent
-            },
-            "disk": {
-                "percent": disk_info.percent
-            },
-            "gpu": {
-                "name": gpu_info[0]["name"] if gpu_info else "No GPU",
-                "load": round(gpu_info[0]["load"], 1) if gpu_info else 0,
-                "memory_total": int(gpu_info[0]["memory_total"]) if gpu_info else 0,
-                "memory_percent": round(gpu_info[0]["memory_percent"], 1) if gpu_info else 0
-            },
-            "active_window": {
-                #"title": "Test Window",
-                #"hwnd": 123456
-                "title": get_active_window()["title"],
-            }
-        }
-        return performance_data
+        return utils.get_performance()
 
 if __name__ == "__main__":
-    client = MonitoringClient("http://localhost:5000/monitor")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--server-url", help="The URL of the server to send data to. Example: http://localhost:5000", required=True)
+    parser.add_argument("-r", "--retry-duration", help="The duration to wait before retrying to send data. Must be int. Default: 3s", type=int, default=3)
+    parser.add_argument("-t", "--target", help="The target to monitor. Example: monitor", type=str, default="monitor")
+    url = parser.parse_args().server_url+"/"+parser.parse_args().target
+    retry_duration = parser.parse_args().retry_duration
+    client = MonitoringClient(url)
     while True:
-        retry_duration = 3  # 重试间隔时间
+        # retry_duration = 3  # 重试间隔时间
         performance_data = client.get_performance_data()
         response = client.send_data(performance_data)
         if response:

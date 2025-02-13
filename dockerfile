@@ -14,7 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # 设置环境变量
-ENV FLASK_APP=server.py
+ENV FLASK_APP=server/server.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 # 运行 Flask 应用
+CMD ["python", "server/server.py"]
