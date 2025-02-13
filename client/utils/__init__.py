@@ -33,6 +33,8 @@ def get_performance():
     disk_info = psutil.disk_usage('/')
     gpus = GPUtil.getGPUs()
     gpu_info = [{"name": gpu.name, "load": gpu.load * 100, "memory_total": gpu.memoryTotal, "memory_used": gpu.memoryUsed, "memory_percent": gpu.memoryUtil * 100} for gpu in gpus]
+    active_window = get_active_window()
+    active_window_title = active_window["title"] if active_window else "Unknown"
 
     performance_data = {
         "cpu": {
@@ -47,14 +49,12 @@ def get_performance():
         },
         "gpu": {
             "name": gpu_info[0]["name"] if gpu_info else "No GPU",
-            "load": round(gpu_info[0]["load"], 1) if gpu_info else 0,
+            "load": round(gpu_info[0]["load"], 1) if gpu_info else 0.0,
             "memory_total": int(gpu_info[0]["memory_total"]) if gpu_info else 0,
-            "memory_percent": round(gpu_info[0]["memory_percent"], 1) if gpu_info else 0
+            "memory_percent": round(gpu_info[0]["memory_percent"], 1) if gpu_info else 0.0
         },
         "active_window": {
-            #"title": "Test Window",
-            #"hwnd": 123456
-            "title": get_active_window()["title"],
+            "title": active_window_title,
         }
     }
     return performance_data
